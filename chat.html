@@ -5,7 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Guftugu - Chat</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./style/chat.css">
 </head>
@@ -28,9 +30,9 @@
     <!-- Profile dropdown -->
     <div class="relative">
       <button id="profileBtn" class="flex items-center space-x-2 focus:outline-none">
-        <img src="https://i.pravatar.cc/40" alt="User Profile"
-          class="w-9 h-9 rounded-full border-2 border-indigo-600" />
-        <span class="hidden sm:inline text-gray-800 font-medium">Abdul Wahab</span>
+        <img id="userImage" alt="User Profile"
+          class="w-11 h-11 rounded-full border-2 border-indigo-600" />
+        <span id="userName" class="hidden sm:inline text-gray-800 font-medium">User Name</span>
         <svg class="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd"
             d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.063a.75.75 0 111.08 1.04l-4.25 4.657a.75.75 0 01-1.08 0l-4.25-4.657a.75.75 0 01.02-1.06z"
@@ -41,11 +43,11 @@
       <!-- Dropdown -->
       <div id="profileDropdown"
         class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 hidden z-50">
-        <div class="px-4 py-2 text-sm text-gray-700">
-          <i class="fas fa-user-circle mr-2 text-indigo-600"></i> Abdul Wahab
+        <div id="dropdownName" class="px-4 py-2 text-sm text-gray-700">
+          <i class="fas fa-user-circle mr-2 text-indigo-600"></i>
         </div>
         <div class="border-t border-gray-100"></div>
-        <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100">
+        <button id="logoutBtn" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100">
           <i class="fas fa-sign-out-alt mr-2"></i> Logout
         </button>
       </div>
@@ -54,41 +56,67 @@
 
 
   <div class="flex flex-grow relative overflow-hidden">
-
-    <!-- Contacts sidebar (mobile toggle) -->
     <aside id="contactsSidebar" class="hidden md:block">
-      <div class="p-4 border-b border-gray-300">
+      <div class="flex items-center justify-between gap-3 p-2 border-b border-gray-300">
         <input type="text" placeholder="Search contacts..."
-          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <div class="flex flex-col items-center justify-center">
+          <button id="addUsersBtn"
+            class="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-700 to-blue-950 text-white shadow-lg flex items-center justify-center text-xl hover:scale-110 transition-transform duration-300 group">
+            <i class="fas fa-user-plus"></i>
+          </button>
+        </div>
       </div>
-
-      <ul class="flex-grow overflow-y-auto divide-y divide-gray-300 p-2">
-        <li class="p-3 hover:bg-indigo-100 cursor-pointer transition rounded-lg flex items-center space-x-4 shadow-sm">
+      
+      <ul id="contactsFromCloud" class="flex-grow overflow-y-auto divide-y divide-gray-300 p-2">
+    
+        
+        <!-- <li class="p-2 hover:bg-indigo-100 cursor-pointer transition rounded-lg flex items-center space-x-4 shadow-sm">
           <img src="https://i.pravatar.cc/48?u=contact1" alt="Contact 1"
             class="w-12 h-12 rounded-full border-2 border-indigo-400" />
           <div class="flex flex-col">
             <p class="font-semibold text-gray-800">Sarah</p>
             <p class="text-sm text-gray-600 truncate max-w-xs">Hey! Are you there?</p>
           </div>
-        </li>
-        <li class="p-3 hover:bg-indigo-100 cursor-pointer transition rounded-lg flex items-center space-x-4 shadow-sm">
-          <img src="https://i.pravatar.cc/48?u=contact2" alt="Contact 2"
-            class="w-12 h-12 rounded-full border-2 border-indigo-400" />
-          <div class="flex flex-col">
-            <p class="font-semibold text-gray-800">Ali</p>
-            <p class="text-sm text-gray-600 truncate max-w-xs">Let's catch up later.</p>
-          </div>
-        </li>
-        <li class="p-3 hover:bg-indigo-100 cursor-pointer transition rounded-lg flex items-center space-x-4 shadow-sm">
-          <img src="https://i.pravatar.cc/48?u=contact3" alt="Contact 3"
-            class="w-12 h-12 rounded-full border-2 border-indigo-400" />
-          <div class="flex flex-col">
-            <p class="font-semibold text-gray-800">Zainab</p>
-            <p class="text-sm text-gray-600 truncate max-w-xs">Sent you the files.</p>
-          </div>
-        </li>
+        </li> -->
+      
       </ul>
     </aside>
+
+    
+    <!-- Overlay Background -->
+    <div id="addContactsTab" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <!-- Modal Box -->
+      <div class="bg-white w-full max-w-md mx-4 rounded-2xl shadow-xl p-6 relative">
+
+        <!-- Close Button -->
+        <button id="usersTabCloseBtn" class="absolute top-1 right-3 text-gray-400 hover:text-red-500 text-3xl">
+          &times;
+        </button>
+
+        <!-- Header -->
+        <h2 class="text-2xl font-bold text-center text-indigo-600 mb-4">Add New Contact</h2>
+
+        <!-- Search Input with Button -->
+        <div class="relative mb-4">
+          <input type="text" placeholder="Search users..."
+            class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+          <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-indigo-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21 21l-4.35-4.35M17 11a6 6 0 1 0-12 0 6 6 0 0 0 12 0z">
+              </path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Users List -->
+        <div id="usersList" class="space-y-4 max-h-72 overflow-y-auto">
+        </div>
+      </div>
+    </div>
+
 
     <!-- Overlay for mobile contacts sidebar -->
     <div id="contactsOverlay" class="md:hidden"></div>
@@ -99,7 +127,7 @@
         <div class="flex-grow flex items-center justify-center text-gray-400 text-lg select-none">
           Start chatting with your contacts!
         </div>
-
+        
         <form class="flex space-x-2" onsubmit="event.preventDefault();">
           <input type="text" placeholder="Type a message..."
             class="flex-grow rounded-l-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -113,7 +141,10 @@
 
   </div>
 
-  <script src="./script/chat.js"></script>
+  <script type="module" src="./script/chat.js"></script>
+
+
+
 
 </body>
 

@@ -33,3 +33,17 @@
     opacity: 1;
     visibility: visible;
 }
+
+@keyframes spin-super {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-super {
+    animation: spin-super 2s linear infinite;
+}
